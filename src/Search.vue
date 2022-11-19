@@ -71,8 +71,9 @@ const openSearch = () => {
   cleanSearch();
   open.value = true;
 };
-
+const mounted = ref(false);
 onMounted(async () => {
+  mounted.value = true;
   //@ts-ignore
   const data = (await import("virtual:search-data")) as { default: LunarData };
   INDEX_DATA.value = data.default.INDEX_DATA;
@@ -113,7 +114,7 @@ function cleanSearch() {
 <template>
   <div class="VPNavBarSearch">
     <!-- <SearchBox /> -->
-    <Teleport to="body">
+    <Teleport to="body" v-if="mounted">
       <div v-show="open" class="modal-back" @click="open = false">
         <div class="modal" @click.stop>
           <form class="DocSearch-Form">
